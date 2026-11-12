@@ -1,3 +1,15 @@
+# ==============================================================================
+# KAGE-TELEMETRY: FUJI GRID ZERO NETWORK POLICY
+# 影テレメトリ：富士グリッド・ゼロ ネットワークポリシー
+# ==============================================================================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: fuji-grid-zero-isolation
+  annotations:
+    description-en: "Blocks unauthorized lateral traffic across the telemetry grid"
+    description-jp: "テレメトリグリッド全体の不正な横移動通信を遮断する"
+
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
