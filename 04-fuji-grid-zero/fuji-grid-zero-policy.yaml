@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: fuji-grid-zero-trust
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: woven-mqtt-broker
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          role: authorized-fleet-ecu
+    ports:
+    - protocol: TCP
+      port: 1883
