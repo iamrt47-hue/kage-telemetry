@@ -1,4 +1,4 @@
-# 🥷 Kage-Telemetry (`🟣 🟣 Project JP Violet Synapse`)
+# 🥷 Kage-Telemetry (`🟣 Project JP Violet Synapse`)
 ### 影テレメトリー（🟣 プロジェクト JP バイオレット・シナプス）
 
 > **GitHub Repository Description / リポジトリ概要:**  
@@ -14,7 +14,11 @@
 
 ### Core Philosophy / 基本理念
 * **EN:** **想定外の排除 (*Sōteigai no haijo* — Eliminating the Unexpected):** Preventing unpredicted attack vectors through strict boundary validation, cryptographic verification, and continuous telemetry monitoring.
-* **JP:** **想定外の排除（Sōteigai no haijo）:** 厳格な境界検証、暗号学的認証、および継続的なテレメトリー監視によって、予測不能な攻撃ベクトルを根本から排除します。
+* **JP:** **想定外の排除（Sōteigai no haijo）:** 厳格な境界検証、暗号学的認証、および継続的なテレメトリー監視によって、予測不能な攻撃ベクトルを根本から排除します。### Phase 3: Kage-Telemetry — Phantom Injection & Sniffer Verification (`03-kage-telemetry`)
+#### 第3段階：影テレメトリー — ファントム注入とスニッファー検証
+* **Scripts / スクリプト:** `phantom_inject.sh`, `kage_sniffer.sh`
+* **EN:** Launched `kage_sniffer.sh` to capture live packet flow while running `phantom_inject.sh` to inject crafted phantom telemetry payloads into the gateway. Demonstrated that unverified sensor coordinates were ingested by the backend, posing a corruption risk to downstream Digital Twin systems.
+* **JP:** `kage_sniffer.sh` を起動してライブパケットフローを監視しながら、`phantom_inject.sh` を実行して細工されたファントム・テレメトリーペイロードをゲートウェイに注入しました。未検証のセンサー座標データがバックエンドに取り込まれることを実証し、下流のデジタルツインシステムが汚染されるリスクを明らかにしました。
 
 ---
 
@@ -22,17 +26,16 @@
 
 * **Attack Node (攻撃ノード):** Parrot Security OS (`tornet-venv` / Live Persistence)
 * **Target Node (標的ノード `woventargetnode`):** Rocky Linux Server hosting containerized telemetry services（コンテナ化されたテレメトリーサービスをホストするRocky Linuxサーバー）
-* **Target Service (標的サービス):** Shuttle Telemetry API over HTTPS (`02-e-palette-phantom`)
+* **Target Services (標的サービス):** Shuttle Telemetry HTTPS API (`:30443`) & Smart-City MQTT Broker (`:31883` → `:1883`)
 * **Observability & SIEM (監視・SIEM):** Netdata (`:19999`) & centralized log aggregation（統合ログ収集）
 
 ```text
 [ Parrot OS Attack Node (攻撃ノード) ] 
-         │  (HTTPS / TLS Traffic & Probe)
-         ▼
-[ Rocky Linux Target Node (標的ノード) ] ──► [ Telemetry API (02-e-palette-phantom) ]
-         │
-         └──► [ Netdata Agent (:19999) ] ──► [ Blue Team SIEM / Alerting (監視・検知) ]
-```
+│  (HTTPS :30443 & MQTT :31883 Traffic)
+▼
+[ Rocky Linux Target Node (標的ノード) ] ──► [ Telemetry API & MQTT Broker ]
+│
+└──► [ Netdata Agent (:19999) ] ──► [ Blue Team SIEM / Alerting (監視・検知) ]
 
 ---
 
@@ -53,8 +56,8 @@
 ### Phase 3: Kage-Telemetry — Phantom Injection & Sniffer Verification (`03-kage-telemetry`)
 #### 第3段階：影テレメトリー — ファントム注入とスニッファー検証
 * **Scripts / スクリプト:** `phantom_inject.sh`, `kage_sniffer.sh`
-* **EN:** Launched `kage_sniffer.sh` to capture live packet flow while running `phantom_inject.sh` to inject crafted phantom telemetry payloads into the gateway. Demonstrated that unverified sensor coordinates were ingested by the backend, posing a corruption risk to downstream Digital Twin systems.
-* **JP:** `kage_sniffer.sh` を起動してライブパケットフローを監視しながら、`phantom_inject.sh` を実行して細工されたファントム・テレメトリーペイロードをゲートウェイに注入しました。未検証のセンサー座標データがバックエンドに取り込まれることを実証し、下流のデジタルツインシステムが汚染されるリスクを明らかにしました。
+* **EN:** Attached `kage_sniffer.sh` to the Smart-City MQTT bus (`:31883`) to monitor wildcard topics (`#`) while running `phantom_inject.sh` to publish spoofed telemetry payloads into `woven/mobility/epalette/unit-07/route`. Demonstrated that unauthenticated MQTT messages were accepted by the broker, posing a corruption risk to downstream Digital Twin systems.
+* **JP:** `kage_sniffer.sh` をスマートシティMQTTバス（`:31883`）に接続してワイルドカードトピック（`#`）を監視しながら、`phantom_inject.sh` を実行して `woven/mobility/epalette/unit-07/route` に偽装テレメトリーペイロードを公開しました。未認証のMQTTメッセージがブローカーに受理されることを実証し、下流のデジタルツインシステムが汚染されるリスクを明らかにしました。
 
 ### Phase 4: Fuji Grid Zero — Zero-Trust Hardening (`04-fuji-grid-zero`)
 #### 第4段階：富士グリッド・ゼロ — ゼロトラスト堅牢化

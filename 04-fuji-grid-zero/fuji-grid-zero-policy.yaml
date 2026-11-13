@@ -5,16 +5,11 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: fuji-grid-zero-isolation
+  name: fuji-grid-zero-trust
+  namespace: default
   annotations:
     description-en: "Blocks unauthorized lateral traffic across the telemetry grid"
     description-jp: "テレメトリグリッド全体の不正な横移動通信を遮断する"
-
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: fuji-grid-zero-trust
-  namespace: default
 spec:
   podSelector:
     matchLabels:

@@ -1,16 +1,21 @@
 ====================================================================
-[PHASE 4: FUJI-GRID-ZERO BLUE TEAM VERIFICATION / 第4段階：検証ログ]
+[PHASE 4: FUJI-GRID-ZERO BLUE TEAM VERIFICATION]
+[第4段階：富士グリッド・ゼロ ブルーチーム検証ログ]
 ====================================================================
-Target Pod: woven-mqtt-broker-5bf557df94-k2jrp (Mosquitto v2.0.22)
-Target Topic: woven/mobility/epalette/unit-07/route
-Monitoring: Netdata v2.12.0 active on :19999
+Target Pod / 対象ポッド: woven-mqtt-broker-5bf557df94-k2jrp (Mosquitto v2.0.22)
+Target Topic / 対象トピック: woven/mobility/epalette/unit-07/route
+Monitoring / 監視ツール: Netdata v2.12.0 active on :19999
 
-[1] Red Team Attack Output (Parrot OS):
+[1] Red Team Attack Output (Parrot OS) / レッドチーム攻撃出力:
 [*] [PHASE 3: KAGE-TELEMETRY] Preparing Surgical Telemetry Spoof...
+[*] [第3段階：影テレメトリ] 精密テレメトリ偽装を準備中...
 [+] Injecting Phantom Telemetry Payload into topic: woven/mobility/epalette/unit-07/route
+[+] トピックへファントム・テレメトリ・ペイロードを注入中: woven/mobility/epalette/unit-07/route
 Connection error: Connection Refused: not authorised.
 [-] BLOCKED BY FUJI-GRID-ZERO: Broker rejected unauthenticated payload.
+[-] 富士グリッド・ゼロにより遮断：ブローカーが未認証ペイロードを拒否しました。
 
-[2] Blue Team Broker Log Proof (Rocky Linux / K8s):
+[2] Blue Team Broker Log Proof (Rocky Linux / K8s) / ブルーチーム・ブローカーログ証明:
 1794450934: New connection from 10.42.0.1:30593 on port 1883.
 1794450934: Client auto-CE389ACF-CB1B-A9B4-19E5-5F2056ED96DD disconnected, not authorised
+
